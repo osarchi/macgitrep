@@ -2,6 +2,7 @@ package com.springboot.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,8 @@ public class BootDemoController {
 
     @Autowired
     private Environment env;
+    @Autowired
+    private JmsMessagingTemplate jmsMessagingTemplate;
 
     @RequestMapping("/send")
     public String send() {
@@ -23,4 +26,8 @@ public class BootDemoController {
 
     }
 
+    @RequestMapping("send1")
+    public void send1(String text) {
+        jmsMessagingTemplate.convertAndSend("text-queue",text);
+    }
 }
